@@ -11,16 +11,26 @@ import {
 import { Button } from '../components/Button';
 import { SkillCard } from '../components/SkillCard';
 
+interface ISkillData {
+    id: string;
+    name: string;
+}
+
 export default function Home() {
     const [newSkill, setNewSkill] = useState('');
-    const [mySkills, setMySkills] = useState([]);
+    const [mySkills, setMySkills] = useState<ISkillData[]>([]);
     const [greeting, setGreeting] = useState('');
 
     function handleAddNewSkill() {
         if (newSkill == '') // shouldn't happen when newSkill is empty
             return
 
-        setMySkills(oldState => [...oldState, newSkill]); // Same as setMySkills([...mySkills, newSkill]);
+        const data = {
+            id: String(new Date().getTime()),
+            name: newSkill,
+        }
+
+        setMySkills(oldState => [...oldState, data]); // Same as setMySkills([...mySkills, data]);
         setNewSkill('');
     }
 
@@ -60,9 +70,9 @@ export default function Home() {
 
             <FlatList 
                 data={mySkills}
-                keyExtractor={item => item}
-                renderItem={ ({ item }) => (
-                    <SkillCard skill={item} />
+                keyExtractor={item => item.id}
+                renderItem={ ({ item: skill }) => (
+                    <SkillCard skill={skill.name} />
                 )}
                 showsVerticalScrollIndicator={false}
             />
