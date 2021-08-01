@@ -54,7 +54,7 @@ export default function Home() {
 
             <TextInput 
                 style={styles.input}
-                placeholder="Enter your new skill"
+                placeholder="enter your new skill"
                 placeholderTextColor="#555"
                 onChangeText={setNewSkill}
                 value={newSkill}
@@ -62,6 +62,7 @@ export default function Home() {
 
             <Button 
                 onPress={handleAddNewSkill}
+                title={'add'}
             />
 
             <Text style={[styles.title, styles.skills__title]}>
@@ -72,7 +73,7 @@ export default function Home() {
                 data={mySkills}
                 keyExtractor={item => item.id}
                 renderItem={ ({ item: skill }) => (
-                    <SkillCard skill={skill.name} />
+                    <SkillCard skillName={skill.name} />
                 )}
                 showsVerticalScrollIndicator={false}
             />
