@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, 
     Text, 
     StyleSheet, 
@@ -7,6 +7,17 @@ import { View,
 } from 'react-native';
 
 export default function Home() {
+    const [newSkill, setNewSkill] = useState('');
+    const [mySkills, setMySkills] = useState([]);
+
+    function handleAddNewSkill() {
+        if (newSkill == '') // shouldn't happen when newSkill is empty
+            return
+
+        setMySkills(oldState => [...oldState, newSkill]); // Same as setMySkills([...mySkills, newSkill]);
+        setNewSkill('');
+    }
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>welcome, guipo</Text>
@@ -15,11 +26,14 @@ export default function Home() {
                 style={styles.input}
                 placeholder="Enter your new skill"
                 placeholderTextColor="#555"
+                onChangeText={(e) => setNewSkill(e)}
+                value={newSkill}
             />
 
             <TouchableOpacity 
                 style={styles.addButton}
                 activeOpacity={.85}
+                onPress={handleAddNewSkill}
             >
                 <Text style={styles.addButton__text}>Add</Text>
             </TouchableOpacity>
@@ -28,6 +42,16 @@ export default function Home() {
                 <Text style={[styles.title, styles.skills__title]}>
                     my skills
                 </Text>
+
+                {
+                    mySkills.map(skill => (
+                        <TouchableOpacity key={skill} style={styles.skill}>
+                            <Text style={styles.skill__text}>
+                                {skill}
+                            </Text>
+                        </TouchableOpacity>
+                    ))
+                }
             </View>
         </View>
     );
@@ -71,6 +95,21 @@ const styles = StyleSheet.create({
     },
 
     skills__title: {
-        marginTop: 50
-    }
+        marginTop: 50,
+        marginBottom: 20
+    },
+
+    skill: {
+        backgroundColor: '#1F1E25',
+        padding: 15,
+        borderRadius: 50,
+        marginBottom: 20
+    },
+
+    skill__text: {
+        color: '#fff',
+        fontSize: 18,
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
 })
