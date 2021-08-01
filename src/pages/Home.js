@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
-import { View, 
+import { 
+    View, 
     Text, 
     StyleSheet, 
     TextInput,
     TouchableOpacity
 } from 'react-native';
+
+/* Components */
+import { Button } from '../components/Button';
+import { SkillCard } from '../components/SkillCard';
 
 export default function Home() {
     const [newSkill, setNewSkill] = useState('');
@@ -30,13 +35,9 @@ export default function Home() {
                 value={newSkill}
             />
 
-            <TouchableOpacity 
-                style={styles.addButton}
-                activeOpacity={.85}
+            <Button 
                 onPress={handleAddNewSkill}
-            >
-                <Text style={styles.addButton__text}>Add</Text>
-            </TouchableOpacity>
+            />
 
             <View>
                 <Text style={[styles.title, styles.skills__title]}>
@@ -45,11 +46,7 @@ export default function Home() {
 
                 {
                     mySkills.map(skill => (
-                        <TouchableOpacity key={skill} style={styles.skill}>
-                            <Text style={styles.skill__text}>
-                                {skill}
-                            </Text>
-                        </TouchableOpacity>
+                        <SkillCard key={skill} skill={skill} />
                     ))
                 }
             </View>
@@ -80,36 +77,8 @@ const styles = StyleSheet.create({
         borderRadius: 7
     },
 
-    addButton: {
-        backgroundColor: '#A370F7',
-        padding: 15,
-        borderRadius: 7,
-        alignItems: 'center',
-        marginTop: 10
-    },
-
-    addButton__text: {
-        color: '#fff',
-        fontSize: 17,
-        fontWeight: 'bold',
-    },
-
     skills__title: {
         marginTop: 50,
         marginBottom: 20
-    },
-
-    skill: {
-        backgroundColor: '#1F1E25',
-        padding: 15,
-        borderRadius: 50,
-        marginBottom: 20
-    },
-
-    skill__text: {
-        color: '#fff',
-        fontSize: 18,
-        fontWeight: 'bold',
-        textAlign: 'center'
     },
 })
