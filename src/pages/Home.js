@@ -4,7 +4,7 @@ import {
     Text, 
     StyleSheet, 
     TextInput,
-    TouchableOpacity
+    FlatList,
 } from 'react-native';
 
 /* Components */
@@ -39,17 +39,19 @@ export default function Home() {
                 onPress={handleAddNewSkill}
             />
 
-            <View>
-                <Text style={[styles.title, styles.skills__title]}>
-                    my skills
-                </Text>
+            <Text style={[styles.title, styles.skills__title]}>
+                my skills
+            </Text>
 
-                {
-                    mySkills.map(skill => (
-                        <SkillCard key={skill} skill={skill} />
-                    ))
-                }
-            </View>
+            <FlatList 
+                data={mySkills}
+                keyExtractor={item => item}
+                renderItem={ ({ item }) => (
+                    <SkillCard skill={item} />
+                )}
+                showsVerticalScrollIndicator={false}
+            />
+
         </View>
     );
 }
