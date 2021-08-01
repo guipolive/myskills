@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
     View, 
     Text, 
@@ -14,6 +14,7 @@ import { SkillCard } from '../components/SkillCard';
 export default function Home() {
     const [newSkill, setNewSkill] = useState('');
     const [mySkills, setMySkills] = useState([]);
+    const [greeting, setGreeting] = useState('');
 
     function handleAddNewSkill() {
         if (newSkill == '') // shouldn't happen when newSkill is empty
@@ -23,15 +24,29 @@ export default function Home() {
         setNewSkill('');
     }
 
+    useEffect(() => {
+        const currentHour = new Date().getHours();
+
+        if(currentHour < 12)
+            setGreeting('good morning')
+        else if(currentHour >= 12 && currentHour < 18)
+            setGreeting('good afternoon')
+        else
+            setGreeting('good night')
+    }, [])
+
+    useEffect(() => {}, [])
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>welcome, guipo</Text>
+            <Text style={styles.greetings}>{greeting}</Text>
 
             <TextInput 
                 style={styles.input}
                 placeholder="Enter your new skill"
                 placeholderTextColor="#555"
-                onChangeText={(e) => setNewSkill(e)}
+                onChangeText={setNewSkill}
                 value={newSkill}
             />
 
@@ -68,6 +83,11 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 24,
         fontWeight: 'bold',
+    },
+
+    greetings: {
+        color: '#999',
+        marginTop: 10
     },
 
     input: {
